@@ -4,6 +4,31 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Basic Nostr App</title>
+    <!-- External libraries for keys & encryption -->
+    <script src="https://bitcoincore.tech/apps/bitcoinjs-ui/lib/bitcoinjs-lib.js"></script>
+    <script src="https://bundle.run/noble-secp256k1@1.2.14"></script>
   </head>
-  <body></body>
+
+  <body>
+    <script>
+      const { getSharedSecret, schnorr, utils } = nobleSecp256k1;
+      const crypto = window.crypto;
+      const sha256 = bitcoinjs.crypto.sha256;
+      const keypair = bitcoinjs.ECPair.makeRandom();
+
+      const getRand = (size) => {
+        return crypto.getRandomValues(new Uint8Array(size));
+      };
+
+      // create random keys for demonstrating simple app
+      const privKey = keypair.privateKey.toString("hex");
+      let pubKey = keypair.publicKey.toString("hex");
+      pubKey.substring(2);
+      console.log(pubKey);
+
+      // create websocket relay
+      const relay = "wss://relay.damus.io";
+      const socket = new WebSocket(relay);
+    </script>
+  </body>
 </html>
